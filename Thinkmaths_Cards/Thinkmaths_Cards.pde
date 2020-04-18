@@ -12,14 +12,16 @@ float padding = 10; //                   |
 int[] solution = new int[(int)Math.pow(2, cards)-1];
 int currentStep;
 int currentMax;
+float timerOffset = 0;
 boolean[] up = new boolean[cards];
 boolean pmousePressed;
 
 void setup() {
   if (!interactive) {
-    frameRate(5); // <-- Remove this line for maximum speed
+    frameRate(60); // <-- Remove this line for maximum speed
   }
   size(640, 360);
+  surface.setResizable(true);
   background(50);
   noStroke();
   textAlign(CENTER, CENTER);
@@ -75,7 +77,8 @@ void draw() {
       noLoop();
     } else {
       currentMax = max(currentStep, currentMax);
-      println("solved in " + currentStep + " steps, current max: " + currentMax);
+      println("solved in " + currentStep + " steps, current max: " + currentMax + " time: " + nf((millis()-timerOffset)/1000, 0, 3));
+      timerOffset = millis();
       setup();
     }
   } else if (!interactive) {
